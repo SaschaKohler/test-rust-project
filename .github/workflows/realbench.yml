@@ -1,0 +1,28 @@
+name: RealBench Profiling
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build with debug info
+        run: RUSTFLAGS="-g" cargo build --release
+
+      - name: Run RealBench Profiler
+        uses: ./action
+        with:
+          command: './target/release/test-rust-project'
+          mode: 'both'
+        env:
+          REALBENCH_API_TOKEN: ${{ secrets.REALBENCH_API_TOKEN }}
