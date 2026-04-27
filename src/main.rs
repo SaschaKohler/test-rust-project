@@ -413,5 +413,3 @@ fn main() {
 }
 
 // create correct url to project-run in dashboard 
-// create pull request
-// test the comments in PR section
